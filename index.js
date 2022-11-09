@@ -1,5 +1,23 @@
 var arr = new Array();
-
+  let listen = document.querySelector('.add');
+  let input = document.querySelector('.inputArr');
+  listen.addEventListener('click',()=>{
+    input.value = " ";
+    input.focus();
+  })
+  input.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      listen.click();
+    }
+  })
+  // hàm xóa rỗng input
+ function clearThis(target){
+  if (target.value != "") {
+    target.value = " ";
+  }
+ }
+ // hàm thêm vào mảng
 function addArr() {
   let a = parseFloat(document.querySelector(".inputArr").value);
   if (isNaN(a)) {
@@ -9,8 +27,11 @@ function addArr() {
   }
 
   document.querySelector("#resultArr").innerHTML = arr;
+  
+
 }
 
+// hàm tính tổng các số dương
 function resultSum() {
   let sum = 0,
     count = 0;
@@ -23,11 +44,11 @@ function resultSum() {
   document.querySelector("#resultSum").innerHTML = sum;
   return count;
 }
-
+// hàm đếm số lượng số dương
 function resultCountPS() {
   document.querySelector("#resultCountPS").innerHTML = resultSum();
 }
-
+//hàm tìm số nhỏ nhất
 function resultMin() {
   let min = arr[0],
     minPs = arr[0];
@@ -36,7 +57,7 @@ function resultMin() {
       min = arr[i];
     }
     if (arr[i] >= 0) {
-      if (arr[i] < min) {
+      if (arr[i] < minPs) {
         minPs = arr[i];
       }
     }
@@ -44,11 +65,11 @@ function resultMin() {
   document.querySelector("#resultMin").innerHTML = min;
   return minPs;
 }
-
+// hàm tìm số dương nhỏ nhất
 function resultMinPS() {
   document.querySelector("#resultMinPS").innerHTML = resultMin();
 }
-
+// hàm tìm số chẵn cuối cùng
 function resultEven() {
   for (let i = arr.length - 1; i >= 0; i--) {
     if (arr[i] % 2 == 0) {
@@ -57,6 +78,8 @@ function resultEven() {
     }
   }
 }
+
+// hàm sắp xếp tăng dần
 function resultSort() {
   let ds = '';
   for (let i = 0; i < arr.length-1;i++) {
@@ -96,16 +119,19 @@ function prime(number) {
       break;
     }
   }
-  // console.log(result);
   return result;
 }
 // let b = [1,4,6,11,15,3];
 // prime(b);
+
+// hàm tìm số nguyên tố đầu tiên
 function resultPrime(){
   console.log(arr);
   document.querySelector("#resultPrime").innerHTML = prime(arr);
 
 }
+
+// hàm đếm số nguyên
 function resultCountInt(){
   let count = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -116,6 +142,8 @@ function resultCountInt(){
   document.querySelector("#resultCountInt").innerHTML = `Có ${count} số nguyên`;
 
 }
+
+// hàm so sánh âm và dương
 function resultLunisolar(){
   let Luni =0, solar = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -134,5 +162,49 @@ function resultLunisolar(){
   }
   else{
     document.querySelector("#resultLunisolar").innerHTML = `Số dương = số âm. Có ${solar} số dương, có ${Luni} số âm`;
+  }
+}
+
+function search(arr,a,b){
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]== a){
+      let temp = arr[i];
+      arr[i] = b;
+      b = temp;
+    }
+  }
+  return arr;
+}
+// let s =  [1,2,3,4,5]  //=> tìm thấy số 3 và thay thế số 3 là số 7
+// // [1,2,7,4,5]
+// search(s,3,7);
+
+// hàm bắt sự kiện rỗng
+
+let change = document.querySelectorAll('.change');
+let changeBtn = document.getElementById('changeBtn');
+change.forEach(element => {
+  element.addEventListener('input', () => {
+   if(element.value.length>0){
+    changeBtn.disabled = false;
+   }
+   else{
+    changeBtn.disabled = true;
+   }
+  })
+  
+});
+
+
+// hàm đổi chỗ
+function resultChange() {
+  let a = parseFloat(document.getElementById('numberChanged').value);
+  let b = parseFloat(document.getElementById('numberChange').value);
+  if(arr.includes(a)){
+    search(arr,a,b);
+    document.querySelector("#resultChange").innerHTML = arr;
+  }
+  else{
+    alert("Lỗi! kiểm tra lại dữ liệu");
   }
 }
